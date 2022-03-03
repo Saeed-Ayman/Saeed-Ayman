@@ -16,20 +16,22 @@ public:
 		data = new dataType(value);
 		type = typeid(dataType).name();
 	}
+	//input all data from console, Syntax is [ object.setvalue<Type>();  ]
 	template<typename dataType>
-	void getValue()
+	void setValue()
 	{
 		delete data;
 		data = new dataType;
-		cout << type;
-		cin >> *(dataType*)data;
-	}
-	void getValue_s()
-	{
-		delete data;
-		data = new string;
-		type = "string";
-		getline(cin, *(string*)data);
+		if (typeid(dataType).name() == typeid(string).name())
+		{
+			getline(cin, *(string*)data);
+			type = "string";
+		}
+		else
+		{
+			cin >> *(dataType*)data;
+			type = typeid(dataType).name();
+		}
 	}
 	friend ostream& operator<<(ostream& stream, const Type& value)
 	{
@@ -90,9 +92,12 @@ struct Node
 
 int main()
 {
-	Node categore[4] = { {"saeed ayman","name"},{3020210074785,"ID"},{20,"Age"},{"Cs","position"} };
+	Node categore[4] = { {"saeed ayman","name"},{3000210074705,"ID"},{20,"Age"},{"Cs","position"} };
 	for (int i = 0; i < 4; i++)
 	{
 		cout << categore[i].name << ':' << categore[i].item << endl;
 	}
+	cout << "New Name : ";
+	categore[0].item.setValue<string>();
+	cout << categore[0].name << ':' << categore[0].item;
 }
